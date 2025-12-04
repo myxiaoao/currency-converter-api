@@ -86,7 +86,7 @@ Check service health and Redis connectivity.
 **Response:**
 ```json
 {
-  "status": "success",
+  "status": "ok",
   "redis": "healthy",
   "last_update": "2024-12-04"
 }
@@ -331,9 +331,9 @@ Returns API basic information and available endpoints.
 **Response Example:**
 ```json
 {
-  "status": "success",
+  "status": "ok",
   "service": "Currency Converter API",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "endpoints": {
     "health": "GET /health",
     "latest_rates": "GET /api/latest?base=<CURRENCY>",

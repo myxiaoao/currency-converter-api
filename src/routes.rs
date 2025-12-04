@@ -12,7 +12,7 @@ async fn root_handler() -> (StatusCode, Json<serde_json::Value>) {
     (
         StatusCode::OK,
         Json(json!({
-            "status": "success",
+            "status": "ok",
             "service": "Currency Converter API",
             "version": "0.2.0",
             "endpoints": {
