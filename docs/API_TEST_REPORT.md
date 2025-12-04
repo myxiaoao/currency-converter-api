@@ -5,7 +5,7 @@
 
 ## Service Information
 - **Name**: Currency Converter API
-- **Version**: 0.1.0
+- **Version**: 0.2.0 (Optimized with Decimal precision)
 - **URL**: http://localhost:3000
 - **Status**: ✅ Running
 
@@ -261,6 +261,37 @@ curl "http://localhost:3000/api/convert?from=US&to=EUR&amount=100"
 
 ---
 
+## Decimal Precision Validation (v0.2.0)
+
+### High-Precision Output
+Version 0.2.0 uses `rust_decimal` for exact arithmetic. All numeric values are returned as high-precision strings:
+
+**Example Response:**
+```json
+{
+  "from": "USD",
+  "to": "EUR",
+  "amount": "100",
+  "result": "85.70449091532396297565992458",
+  "rate": "0.8570449091532396297565992458"
+}
+```
+
+**Key Features:**
+- ✅ **Arbitrary Precision**: No floating-point rounding errors
+- ✅ **Exact Decimal**: Suitable for financial/accounting applications
+- ✅ **Consistent**: Same precision across all operations
+- ✅ **JSON Strings**: Numbers serialized as strings to preserve precision
+
+### Precision Comparison
+
+| Version | Type | Precision | Example Rate |
+|---------|------|-----------|--------------|
+| 0.1.0 | f64 | ~15 digits | `0.857044909153239` |
+| 0.2.0 | Decimal | Arbitrary | `0.8570449091532396297565992458` |
+
+---
+
 ## Data Validation
 
 ### Exchange Rate Data
@@ -345,5 +376,6 @@ AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, ILS, INR, ISK, 
 
 **Test Completion Time**: 2025-12-04  
 **Test Executor**: Automated Test Suite  
-**Service Version**: 0.1.0  
-**Status**: ✅ All Passed
+**Service Version**: 0.2.0  
+**Status**: ✅ All Passed  
+**Optimization**: O(1) conversion + Decimal precision

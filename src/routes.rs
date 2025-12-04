@@ -14,7 +14,7 @@ async fn root_handler() -> (StatusCode, Json<serde_json::Value>) {
         Json(json!({
             "status": "success",
             "service": "Currency Converter API",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "endpoints": {
                 "health": "GET /health",
                 "latest_rates": "GET /api/latest?base=<CURRENCY>",
