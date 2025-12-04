@@ -1,13 +1,15 @@
 use chrono::NaiveDate;
+use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 /// Daily exchange rates with EUR as base currency (from ECB)
+/// Uses Decimal for precise financial calculations
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DailyRate {
     pub date: String,
     pub base: String,
-    pub rates: HashMap<String, f64>,
+    pub rates: HashMap<String, Decimal>,
 }
 
 /// ECB XML envelope structure
@@ -48,13 +50,13 @@ impl DailyRate {
         for rate in rates {
             let rate_value = rate
                 .rate
-                .parse::<f64>()
+                .parse::<Decimal>()
                 .map_err(|e| format!("Failed to parse rate for {}: {}", rate.currency, e))?;
             rate_map.insert(rate.currency.to_uppercase(), rate_value);
         }
 
         // Add EUR = 1.0 (ECB doesn't include it since it's the base)
-        rate_map.insert("EUR".to_string(), 1.0);
+        rate_map.insert("EUR".to_string(), Decimal::ONE);
 
         Ok(DailyRate {
             date: time,

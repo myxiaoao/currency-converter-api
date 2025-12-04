@@ -1,7 +1,7 @@
 use axum::{
+    Json,
     http::StatusCode,
     response::{IntoResponse, Response},
-    Json,
 };
 use serde_json::json;
 use thiserror::Error;
@@ -25,6 +25,9 @@ pub enum ApiError {
 
     #[error("XML parse error: {0}")]
     XmlParseError(String),
+
+    #[error("Calculation error: {0}")]
+    CalculationError(String),
 
     #[error("Internal server error: {0}")]
     InternalError(String),
@@ -55,6 +58,13 @@ impl IntoResponse for ApiError {
                 (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     "Failed to parse exchange rate data".to_string(),
+                )
+            }
+            ApiError::CalculationError(ref msg) => {
+                tracing::error!("Calculation error: {}", msg);
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    "Calculation error occurred".to_string(),
                 )
             }
             ApiError::InternalError(ref msg) => {

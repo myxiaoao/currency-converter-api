@@ -94,11 +94,13 @@ mod tests {
         let fetcher = EcbFetcher::new("http://example.com".to_string());
         let result = fetcher.parse_ecb_xml(xml).unwrap();
 
+        use rust_decimal_macros::dec;
+
         assert_eq!(result.date, "2024-12-04");
         assert_eq!(result.base, "EUR");
         assert_eq!(result.rates.len(), 4); // USD, JPY, GBP + EUR
-        assert_eq!(result.rates["USD"], 1.0534);
-        assert_eq!(result.rates["JPY"], 158.23);
-        assert_eq!(result.rates["EUR"], 1.0); // EUR added automatically
+        assert_eq!(result.rates["USD"], dec!(1.0534));
+        assert_eq!(result.rates["JPY"], dec!(158.23));
+        assert_eq!(result.rates["EUR"], dec!(1.0)); // EUR added automatically
     }
 }

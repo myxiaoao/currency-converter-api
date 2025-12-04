@@ -47,6 +47,10 @@ chrono = { version = "0.4", features = ["serde"] }
 # Validation
 validator = { version = "0.19", features = ["derive"] }
 
+# Decimal precision for financial calculations
+rust_decimal = { version = "1.37", features = ["serde"] }
+rust_decimal_macros = "1.37"
+
 [profile.release]
 opt-level = 3
 lto = true

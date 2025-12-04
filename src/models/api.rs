@@ -1,5 +1,7 @@
+use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::str::FromStr;
 use validator::Validate;
 
 /// Response for GET /api/latest
@@ -7,7 +9,7 @@ use validator::Validate;
 pub struct LatestRatesResponse {
     pub date: String,
     pub base: String,
-    pub rates: HashMap<String, f64>,
+    pub rates: HashMap<String, Decimal>,
 }
 
 /// Query parameters for GET /api/latest?base=USD
@@ -24,8 +26,21 @@ pub struct ConvertQuery {
     pub from: String,
     #[validate(length(equal = 3))]
     pub to: String,
-    #[validate(range(min = 0.0))]
-    pub amount: f64,
+    pub amount: String, // Accept as string to parse as Decimal for precision
+}
+
+impl ConvertQuery {
+    /// Parse amount string to Decimal with validation
+    pub fn parse_amount(&self) -> Result<Decimal, String> {
+        let amount =
+            Decimal::from_str(&self.amount).map_err(|e| format!("Invalid amount format: {}", e))?;
+
+        if amount < Decimal::ZERO {
+            return Err("Amount must be non-negative".to_string());
+        }
+
+        Ok(amount)
+    }
 }
 
 /// Response for GET /api/convert
@@ -33,9 +48,9 @@ pub struct ConvertQuery {
 pub struct ConvertResponse {
     pub from: String,
     pub to: String,
-    pub amount: f64,
-    pub result: f64,
-    pub rate: f64,
+    pub amount: Decimal,
+    pub result: Decimal,
+    pub rate: Decimal,
     pub date: String,
 }
 
