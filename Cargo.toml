@@ -1,0 +1,54 @@
+[package]
+name = "currency-converter-api"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[[bin]]
+name = "currency-converter-api"
+path = "src/main.rs"
+
+[dependencies]
+# Web framework
+axum = "0.8"
+tokio = { version = "1.42", features = ["full"] }
+tower-http = { version = "0.6", features = ["cors", "trace", "compression-gzip"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# HTTP client for ECB
+reqwest = { version = "0.12", features = ["rustls-tls"] }
+
+# XML parsing
+quick-xml = { version = "0.37", features = ["serialize"] }
+
+# Redis
+redis = { version = "0.27", features = ["tokio-comp", "connection-manager"] }
+
+# Scheduling
+tokio-cron-scheduler = "0.14"
+
+# Configuration
+dotenvy = "0.15"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Error handling
+thiserror = "2.0"
+anyhow = "1.0"
+
+# Date/time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Validation
+validator = { version = "0.19", features = ["derive"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

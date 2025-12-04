@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+    redis:
+        image: redis:7-alpine
+        container_name: currency-redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data:/data
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 5s
+            timeout: 3s
+            retries: 5
+        restart: unless-stopped
+
+    currency-converter-api:
+        build: .
+        container_name: currency-converter-api
+        ports:
+            - "3000:3000"
+        environment:
+            - SERVER_HOST=0.0.0.0
+            - SERVER_PORT=3000
+            - REDIS_URL=redis://redis:6379
+            - ECB_URL=https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml
+            - UPDATE_CRON=0 0 15 * * *
+            - RUST_LOG=info,currency_converter_api=debug
+        depends_on:
+            redis:
+                condition: service_healthy
+        restart: unless-stopped
+
+volumes:
+    redis_data:
