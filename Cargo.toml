@@ -10,46 +10,46 @@ path = "src/main.rs"
 
 [dependencies]
 # Web framework
-axum = "0.8"
-tokio = { version = "1.42", features = ["full"] }
+axum = "0.8.7"
+tokio = { version = "1.48", features = ["full"] }
 tower-http = { version = "0.6", features = ["cors", "trace", "compression-gzip"] }
 
 # Serialization
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
 
 # HTTP client for ECB
-reqwest = { version = "0.12", features = ["rustls-tls"] }
+reqwest = { version = "0.12.23", features = ["rustls-tls"] }
 
 # XML parsing
-quick-xml = { version = "0.37", features = ["serialize"] }
+quick-xml = { version = "0.38", features = ["serialize"] }
 
 # Redis
-redis = { version = "0.27", features = ["tokio-comp", "connection-manager"] }
+redis = { version = "0.32.7", features = ["tokio-comp", "connection-manager"] }
 
 # Scheduling
-tokio-cron-scheduler = "0.14"
+tokio-cron-scheduler = "0.15"
 
 # Configuration
-dotenvy = "0.15"
+dotenvy = "0.15.7"
 
 # Logging
-tracing = "0.1"
+tracing = "0.1.43"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # Error handling
-thiserror = "2.0"
-anyhow = "1.0"
+thiserror = "2.0.17"
+anyhow = "1.0.99"
 
 # Date/time
-chrono = { version = "0.4", features = ["serde"] }
+chrono = { version = "0.4.42", features = ["serde"] }
 
 # Validation
-validator = { version = "0.19", features = ["derive"] }
+validator = { version = "0.20", features = ["derive"] }
 
 # Decimal precision for financial calculations
-rust_decimal = { version = "1.37", features = ["serde"] }
-rust_decimal_macros = "1.37"
+rust_decimal = { version = "1.37.2", features = ["serde"] }
+rust_decimal_macros = "1.37.2"
 
 [profile.release]
 opt-level = 3
