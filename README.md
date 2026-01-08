@@ -1,10 +1,22 @@
+<div align="center">
+
 # Currency Converter API
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+**A high-performance RESTful API for real-time currency exchange rates and conversion**
 
-A high-performance RESTful API built with Rust and Axum that provides real-time currency exchange rates and conversion capabilities. Data is sourced from the European Central Bank (ECB) and cached in Redis for fast access.
+Built with Rust 🦀 and Axum for blazing-fast performance
 
-**GitHub Repository**: [https://github.com/myxiaoao/currency-converter-api](https://github.com/myxiaoao/currency-converter-api)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Rust](https://img.shields.io/badge/rust-1.83+-orange.svg)](https://www.rust-lang.org)
+[![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](https://www.docker.com)
+
+---
+
+Fetch daily exchange rates from the European Central Bank (ECB), cache them in Redis, and convert between 32+ currencies with sub-millisecond response times and financial-grade precision.
+
+[GitHub Repository](https://github.com/myxiaoao/currency-converter-api)
+
+</div>
 
 ## Features
 
