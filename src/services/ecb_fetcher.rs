@@ -98,9 +98,9 @@ mod tests {
 
         assert_eq!(result.date, "2024-12-04");
         assert_eq!(result.base, "EUR");
-        assert_eq!(result.rates.len(), 4); // USD, JPY, GBP + EUR
+        assert_eq!(result.rates.len(), 3); // USD, JPY, GBP (EUR is base, not in map)
         assert_eq!(result.rates["USD"], dec!(1.0534));
         assert_eq!(result.rates["JPY"], dec!(158.23));
-        assert_eq!(result.rates["EUR"], dec!(1.0)); // EUR added automatically
+        assert!(!result.rates.contains_key("EUR"));
     }
 }

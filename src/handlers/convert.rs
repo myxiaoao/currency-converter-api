@@ -11,25 +11,20 @@ pub async fn convert_handler(
     State(store): State<RedisStore>,
     Query(params): Query<ConvertQuery>,
 ) -> Result<Json<ConvertResponse>, ApiError> {
-    // Validate query parameters
     params
         .validate()
         .map_err(|e| ApiError::ValidationError(e.to_string()))?;
 
-    // Parse and validate amount
-    let amount = params
-        .parse_amount()
-        .map_err(|e| ApiError::ValidationError(e))?;
+    let amount = params.parse_amount()?;
+    let from = params.from.to_uppercase();
+    let to = params.to.to_uppercase();
 
-    // Get rates from Redis
     let rates = store.get_rates().await?.ok_or(ApiError::NoRatesAvailable)?;
-
-    // Perform conversion (optimized O(1) direct calculation)
-    let (result, rate) = convert_currency(&rates, &params.from, &params.to, amount)?;
+    let (result, rate) = convert_currency(&rates, &from, &to, amount)?;
 
     Ok(Json(ConvertResponse {
-        from: params.from.to_uppercase(),
-        to: params.to.to_uppercase(),
+        from,
+        to,
         amount,
         result,
         rate,

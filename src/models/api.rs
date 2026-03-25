@@ -1,3 +1,4 @@
+use crate::error::ApiError;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -30,13 +31,14 @@ pub struct ConvertQuery {
 }
 
 impl ConvertQuery {
-    /// Parse amount string to Decimal with validation
-    pub fn parse_amount(&self) -> Result<Decimal, String> {
-        let amount =
-            Decimal::from_str(&self.amount).map_err(|e| format!("Invalid amount format: {}", e))?;
+    pub fn parse_amount(&self) -> Result<Decimal, ApiError> {
+        let amount = Decimal::from_str(&self.amount)
+            .map_err(|e| ApiError::ValidationError(format!("Invalid amount format: {}", e)))?;
 
         if amount < Decimal::ZERO {
-            return Err("Amount must be non-negative".to_string());
+            return Err(ApiError::ValidationError(
+                "Amount must be non-negative".to_string(),
+            ));
         }
 
         Ok(amount)

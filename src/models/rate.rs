@@ -55,12 +55,11 @@ impl DailyRate {
             rate_map.insert(rate.currency.to_uppercase(), rate_value);
         }
 
-        // Add EUR = 1.0 (ECB doesn't include it since it's the base)
-        rate_map.insert("EUR".to_string(), Decimal::ONE);
+        let base = "EUR".to_string();
 
         Ok(DailyRate {
             date: time,
-            base: "EUR".to_string(),
+            base,
             rates: rate_map,
         })
     }
